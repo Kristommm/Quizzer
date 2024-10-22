@@ -1,0 +1,13 @@
+{% extends 'quizzer_app/base.html' %}
+
+{% block content %}
+    <h2 class="text-center col-10 col-xl-6 mx-auto">Make a quiz!</h2></br>
+    <div>
+    {% for subject in subjects %}
+      <a href = "{% url 'quizzer_app:pick_topics' id=subject.id %}" class="d-grid gap-2 col-12 col-xl-6 mx-auto">
+        <button type="button" class="btn btn-primary">{{subject}}</button>
+      </a>
+    <br>
+    {% endfor %}
+    </div>
+{% endblock content %}

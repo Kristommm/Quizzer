@@ -1,0 +1,21 @@
+{% extends 'quizzer_app/base.html' %}
+
+{% block content %}
+
+<h2> Score: {{ score }} </h2>
+<div>
+    {% for item in response %}
+    <p {% if item.correct_answer == item.user_answer %} 
+        style="background-color: rgba(0, 255, 0, 0.1);"
+        {% else %}
+        style="background-color: rgba(255, 0, 0, 0.1);"
+        {% endif %}>
+        {{ forloop.counter}}. {{ item.question }} <br><br>
+        Your answer: {{ item.user_answer }}<br>
+        Correct answer: {{ item.correct_answer }} <br>
+        <hr>
+    </p>
+    {% endfor %}
+</div>
+
+{% endblock content %}

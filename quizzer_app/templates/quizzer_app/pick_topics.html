@@ -1,0 +1,20 @@
+{% extends 'quizzer_app/base.html' %}
+{% load django_bootstrap5%}
+{% load static %}
+
+{% block content %}
+<h2 class="text-center col-12 col-xl-6 mx-auto">Pick topics!</h2></br>
+<form action="{% url "quizzer_app:custom_quiz" %}" method='GET'>
+    <input type="hidden" name="subject" value ="{{ picked_subject.subject }}"> </br>
+    <ul class="list-group d-grid gap-2 col-12 col-xl-6 mx-auto ">
+    {% for topic in topics %}
+    <li class="list-group-item">
+        <input class="choice" type="checkbox" value="{{topic.id}}" name="subname{{forloop.counter}}">
+        {{ topic.topic }} </br>
+    </li>
+    {% endfor %}
+    </ul>
+    <button type="submit" id="btn"class="btn btn-primary d-grid col-12 col-xl-6 mx-auto mt-4" disabled>Submit</button>
+</form>
+<script src={% static "quizzer_app/button.js" %}></script>
+{% endblock content %}

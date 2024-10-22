@@ -1,0 +1,10 @@
+{% extends 'quizzer_app/base.html' %}
+
+{% block content %}
+<h1>{{ question.question }}</h1>
+<p>{{ question.option_a }}</p>
+<p>{{ question.option_b }}</p>
+<p>{{ question.option_c }}</p>
+<p>{{ question.option_d }}</p>
+<p>{{ question.answer }}</p>
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'quizzer_app/base.html' %}
+{% load django_bootstrap5%}
+
+{% block content %}
+<table class="table col-12">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Score</th>
+        <th scope="col">Time taken</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Quiz Link</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for quiz in quizzes %}
+      <tr>
+        <td style="border: 1px solid black; padding: 10px;">{{quiz.score}}</td>
+        <td style="border: 1px solid black; padding: 10px;">{{quiz.date_taken|date:'Y-m-d H:i'}}</td>
+        <td style="border: 1px solid black; padding: 10px;">{{quiz.subject}}</td>
+        <td style="border: 1px solid black; padding: 10px;">
+            <a href="{% url "quizzer_app:my_quiz" id=quiz.id %}">
+                <button type="button" class="btn btn-info" > See quiz </button>
+            </a>
+        <td>
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
+

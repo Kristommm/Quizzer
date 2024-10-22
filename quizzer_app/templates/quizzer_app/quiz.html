@@ -1,0 +1,52 @@
+{% extends 'quizzer_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2 id="timer" class="text-center"></h2>
+<p>Questions</p>
+<form id="answer-form" action= '{% url 'quizzer_app:check_quiz' %}' method='post' id="quizform" >
+{% csrf_token %}
+<input type="hidden" name='subject' value="{{ picked_subject }}">
+<ol style="list-style-type: none" class="col-12 mx-auto">
+  {% for question in questions %}
+      <li class="col-12 mx-auto">
+          {{ forloop.counter }}. {{ question.question }} <br>
+          <input class ="answer" type="radio" id="option_a" value="a" name= {{question.id}} > {{ question.option_a }} <br>
+          <input class ="answer" type="radio" id="option_b" value="b" name= {{question.id}} > {{ question.option_b }} <br>
+          <input class ="answer" type="radio" id="option_c" value="c" name= {{question.id}} > {{ question.option_c }} <br>
+          <input class ="answer" type="radio" id="option_d" value="d" name= {{question.id}} > {{ question.option_d }}
+          <input class ="answer" type="radio" value="" name= {{question.id}} style="display: none;" checked>
+      <hr />
+      </li>
+  {% endfor %}
+</ol>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Submit
+</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Submit Quiz</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        You're about to submit your quiz. Submit now?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+<script src={% static "quizzer_app/timer.js" %}></script>
+<script src={% static "quizzer_app/unload.js" %}></script>
+
+
+{% endblock content %}
+
+

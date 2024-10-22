@@ -1,0 +1,42 @@
+{% extends 'quizzer_app/base.html' %}
+
+{% block content %}
+
+<table class="table col-12">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Question</th>
+        <th scope="col">Question Link</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for question in question_list %}
+      <tr>
+        <td style="border: 1px solid black; padding: 10px;">{{ question.question|slice:"60" }} ...</td>
+        <td style="border: 1px solid black; padding: 10px;">
+            <a href="{% url "quizzer_app:question_detail" pk=question.pk %}">
+                <button type="button" class="btn btn-info" > See question </button>
+            </a>
+        <td>
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock content %}

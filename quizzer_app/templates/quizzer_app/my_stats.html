@@ -1,0 +1,25 @@
+{% extends 'quizzer_app/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="text-center">
+    <a href="{% url "quizzer_app:monthly_stats" year=current_date.year month=current_date.month %}">
+        <button type="button" class="btn btn-info" > Monthly Filtered Stats </button>
+    </a>
+</div>
+
+<br><br>
+{% for data in data %}
+    {% for subject, score in average_per_subject.items %}
+    {% if subject == data %}
+    <h2 class="text-center">{{subject}} - {{score}}%</h2>
+    {% endif %}
+    {% endfor %}
+    <div style="margin: auto; position: relative; height:70vh; width:70vw"><canvas id="chart{{ forloop.counter }}"></canvas></div><br><br><hr>
+{% endfor %}
+
+{{ data|json_script:"user_stats"}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src={% static "quizzer_app/chartMaker.js" %}></script>
+
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends 'quizzer_app/base.html' %}
+
+{% block content %}
+
+<a href = "{% url 'quizzer_app:my_quizzes' %}">
+    <button type="button" class="btn btn-info btn-lg float-end">Back to Quizzes</button>
+</a><br>
+<h2> Score: {{ score }} </h2>
+<div>
+    {% for question in quiz_questions %}
+    <p {% if question.correct_answer == question.user_answer %} 
+        style="background-color: rgba(0, 255, 0, 0.1);"
+        {% else %}
+        style="background-color: rgba(255, 0, 0, 0.1);"
+        {% endif %}>
+        {{ forloop.counter}}. {{ question.question }} <br><br>
+        Your answer: {{ question.user_answer }}<br>
+        Correct answer: {{ question.correct_answer }} <br>
+        <hr>
+    </p>
+    {% endfor %}
+</div>
+
+{% endblock content %}

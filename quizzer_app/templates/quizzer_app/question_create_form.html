@@ -1,0 +1,10 @@
+{% extends 'quizzer_app/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" value="Save">
+</form>
+{% endblock content %}
