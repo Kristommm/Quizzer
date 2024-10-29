@@ -16,7 +16,7 @@ from environs import Env
 env = Env()
 env.read_env()
 
-settings_status = 'DEVELOPMENT'
+settings_status = 'PRODUCTION'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

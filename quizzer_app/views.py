@@ -1,4 +1,6 @@
 from typing import Any
+
+from django.contrib.auth import user_logged_in
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,6 +8,8 @@ from .mixins import GroupRequiredMixin
 from django.http import Http404
 from django.views.generic import CreateView, ListView, DetailView
 from django.db.models import F
+from django.views.decorators.vary import vary_on_cookie
+from django.views.decorators.cache import cache_page
 
 from .models import Question, Subject, QuizQuestion
 from accounts.models import UserProfile
@@ -13,6 +17,7 @@ from django.contrib.auth.models import User
 
 from random import shuffle, choice
 from datetime import date
+
 
 def index(request):
     """The home page for quizzer app"""
@@ -27,7 +32,7 @@ def quiz(request):
     topics = Subject.objects.filter(subject=picked_subject)[0].topic.all()
     raw_questions = []
     if not course or not picked_subject or not topics:
-        return Http404
+        raise Http404
     for topic in topics:
         questions = Question.objects.filter(topic=topic)
         for question in questions:
@@ -42,9 +47,6 @@ def quiz(request):
 def check_quiz(request):
     """Show the result of the quiz."""
     answers = request.POST.dict()
-    if not answers:
-        # set message
-        return Http404
     answers_dict = {}
     quiz_string = ''
     subject = None
@@ -102,7 +104,7 @@ def make_quiz(request):
     course = UserProfile.objects.get(user=user).course
     subjects = Subject.objects.filter(course=course)
     if not user or not course or not subjects:
-        return Http404
+        raise Http404
     context = {'subjects': subjects}
     return render(request, 'quizzer_app/make_quiz.html', context=context)
 
@@ -130,7 +132,7 @@ def custom_quiz(request):
     request.session["quiz_status"] = "done"
     topics = request.GET.dict()
     if not topics:
-        return Http404
+        raise Http404
     raw_questions = []
     subject = None
     for key, topic_id in topics.items():
@@ -148,15 +150,17 @@ def custom_quiz(request):
     return render(request, 'quizzer_app/custom_quiz.html', context=context)
 
 
+@cache_page(15*60)
+@vary_on_cookie
 @login_required
 def my_quizzes(request):
     quizzes = QuizQuestion.objects.filter(owner=request.user).order_by('date_taken')
-    if not quizzes:
-        return Http404
     context = {"quizzes": quizzes}
     return render(request, 'quizzer_app/my_quizzes.html', context=context)
 
 
+@cache_page(15*60)
+@vary_on_cookie
 @login_required
 def my_quiz(request, id):
     quiz = get_object_or_404(QuizQuestion, pk=id)
@@ -182,6 +186,8 @@ def my_quiz(request, id):
     context = {'quiz_questions':quiz_questions , 'score': quiz.score}
     return render(request, 'quizzer_app/my_quiz.html', context=context)
 
+@cache_page(15*60)
+@vary_on_cookie
 @login_required
 def my_stats(request):
     data = {}
@@ -193,8 +199,8 @@ def my_stats(request):
     subjects = list(Subject.objects.filter(course=user_course).values_list('subject', flat=True))
     quizzes = QuizQuestion.objects.filter(owner=request.user).values('quiz_string')
 
-    if not user_course or not subjects or not quizzes:
-        return Http404
+    if not user_course or not subjects:
+        raise Http404
 
     for subject in subjects:
         total_score = 0
@@ -235,6 +241,8 @@ def my_stats(request):
     context = {'data': data, 'current_date': current_date, 'average_per_subject': average_per_subject}
     return render(request, 'quizzer_app/my_stats.html', context=context)
 
+@cache_page(15*60)
+@vary_on_cookie
 @login_required
 def monthly_stats(request, year, month):
     data = {}
@@ -301,7 +309,8 @@ def monthly_stats(request, year, month):
 
         return render(request, 'quizzer_app/monthly_stats.html', context=context)
 
-
+@cache_page(15*60)
+@vary_on_cookie
 @login_required
 def my_quiz(request, id):
     quiz = get_object_or_404(QuizQuestion, pk=id)
