@@ -1,21 +1,15 @@
 
 const data = JSON.parse(document.getElementById('user_stats').textContent);
-const subjects = Object.values(data)
+const subjects = Object.keys(data)
 const colors = ['#ff80ed', '#065535', '#000000', '#133337', '#ffe4e1', '#008080', '#ff0000',
                 '#e6e6fa', '#ffd700', '#00ffff', '#ffa500', '#0000ff', '#c6e2ff', '#b0e0e6',
                 '#ff7373', '#40e0d0', '#d3ffce', '#f0f8ff', '#666666', '#faebd7', '#bada55'
                 ]
 
-for (i=0; i<subjects.length; i++) {
-    var color = getRandomColor()
-    colors.push(color)
-}
-
-
-
 for (i=1; i < subjects.length + 1; i++) {
     var chartName = 'chart' + i
     const topics = Object.keys(data[subjects[i-1]])
+    const usedColors = colors.slice(0, topics.length)
     var scores = []
     for (j=0; j<topics.length; j++) {
         var total = data[subjects[i-1]][topics[j]]['total']
@@ -30,7 +24,7 @@ for (i=1; i < subjects.length + 1; i++) {
             datasets: [{
             data: scores,
             borderWidth: 1,
-            backgroundColor: colors
+            backgroundColor: usedColors
             }]
         },
         options: {
