@@ -1,11 +1,84 @@
 {% extends 'quizzer_app/base.html' %}
-
+{% load static %}
 {% block page_header %}
 <div class="p-3 mb-4 bg-light border rounded-4">
     <div class="container-fluid py-4">
         <h1 class="display-3">Quizzer App</h1>
         <p class="lead">This app will give you a quiz coming from our database</p>
-
 <a href="{% url "quizzer_app:make_quiz" %}">Take a custom quiz!</a>
+    </div>
+<div class="container-fluid py-4">
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 5"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="5" aria-label="Slide 6"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="6" aria-label="Slide 7"></button>
+
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="10000">
+        <img src={% static "quizzer_app/img1.png" %} class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>The Quizzer App</h5>
+          <p>The quizzer app serves questions based on your picked subject and topics.</p>
+        </div>
+      </div>
+      <div class="carousel-item" data-bs-interval="2000">
+        <img src={% static "quizzer_app/img2.png" %} class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Make your own quiz!</h5>
+          <p>Go pick the subject you want to take a quiz on.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src={% static "quizzer_app/img3.png" %} class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Pick your own topics!</h5>
+          <p>You can also pick the topics you want to take!</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src={% static "quizzer_app/img4.png" %} class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Look at your stats!</h5>
+          <p>This app gives you a summary on your performance per subject and topics.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src={% static "quizzer_app/img5.png" %} class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Your Quizzes</h5>
+          <p>You can always look back on the quizzes you've taken.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src={% static "quizzer_app/img6.png" %} class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Go review your taken quizzes!</h5>
+          <p>Don't worry, you can always go back to the quizzes you've taken.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src={% static "quizzer_app/img7.png" %} class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Go start taking quizzes!</h5>
+          <p>“Sometimes it’s the people no one imagines anything of who do the things that no one can imagine.” </p>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
 {% endblock page_header %}
 

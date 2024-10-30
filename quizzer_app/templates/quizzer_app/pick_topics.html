@@ -4,11 +4,16 @@
 
 {% block content %}
 <h2 class="text-center col-12 col-xl-6 mx-auto">Pick topics!</h2></br>
+<div class="text-center">
+    <input class="form-check-input" type="checkbox" value="" id="selectAll">
+    <label class="form-check-label" for="flexCheckDefault">
+      All Subjects
+    </label>
+</div>
 
 <form action="{% url "quizzer_app:custom_quiz" %}" method='GET'>
     <input type="hidden" name="subject" value ="{{ picked_subject.subject }}"> </br>
     <ul class="list-group d-grid gap-2 col-12 col-xl-6 mx-auto ">.
-    <input id="selectAll" type="checkbox">All subjects</input>
     {% for topic in topics %}
     <li class="list-group-item">
         <input class="choice" type="checkbox" value="{{topic.id}}" name="subname{{forloop.counter}}">

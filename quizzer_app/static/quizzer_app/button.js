@@ -13,7 +13,8 @@ function countCheck(e) {
         checkboxCounter--
     }
     if (checkboxCounter > 0 && checkboxCounter != checkBoxes.length - 1){
-        document.getElementById("btn").disabled = false;   
+        document.getElementById("btn").disabled = false;
+        selectAllCheckbox.checked = false
     } else if (checkboxCounter === checkBoxes.length - 1) {
         selectAllCheckbox.checked = true
     } else {
